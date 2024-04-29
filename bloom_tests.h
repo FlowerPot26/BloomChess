@@ -43,6 +43,9 @@ void measureEvalSpeed(Board& board);
 // Minimax with output
 void printFindBestMove(Board& board, int depth, int player, int quiescence_depth);
 
+// Optimised Minimax with output
+void printQuickFindBestMove(Board& board, int depth, int player, int quiescence_depth);
+
 // Check attack checking
 void testAttackSquares(Board& board, int player);
 

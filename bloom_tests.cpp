@@ -293,6 +293,35 @@ void printFindBestMove(Board& board, int depth, int player, int quiescence_depth
     return;
 }
 
+void printQuickFindBestMove(Board& board, int depth, int player, int quiescence_depth) {
+
+    auto start = chrono::steady_clock::now();
+
+    //moves_searched = 0;
+    //quiescence_moves_searched = 0;
+
+    LegalMove empty_move = {0,0};
+    Move found_move = quickFindBestMove(board, depth, player,  -1000000, 1000000, quiescence_depth);
+
+    cout << "Final Move: " << i_to_string(found_move.from_i) << "," << i_to_string(found_move.to_i) << "\n";
+
+    cout << "Valuation: " << found_move.valuation << "\n";  
+
+    //cout << "Moves searched: " << moves_searched << "\n";
+
+    //cout << "Transpositions found: " << transpositions_found << "\n";
+
+    //cout << "Qiescence Moves searched: " << quiescence_moves_searched << "\n";
+
+    
+
+    auto end = chrono::steady_clock::now();
+    auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+    cout << "Execution duration: " << duration << " nanoseconds; " << duration / 1000000000.0 << "seconds;" << "\n";
+
+    return;
+}
+
 void testAttackSquares(Board& board, int player) {
     cout << "Attack Squares of: " << player << "\n";
     for (int i = 0; i < 64; i++) {

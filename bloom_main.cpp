@@ -15,15 +15,22 @@ using namespace std;
 int main() {
 
 
-    string fen_string = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    string fen_string = "rn1q1rk1/p1b2ppp/2p2n2/4p3/2B3bN/2NP4/PPPQ1PPP/R1B2RK1 w - - 8 11";
     
     
     Board new_board(fen_string);
 
     new_board.printBoard();
 
-    
-    printFindBestMove(new_board, 6, -1, 4);
+    new_board.transposition_table.resize(4000000);
+
+    new_board.transposition_table.clear();
+    new_board.transposition_table.check();
+
+    printQuickFindBestMove(new_board, 6, 1, 5);
+
+    new_board.transposition_table.check();
+
 
     
 }

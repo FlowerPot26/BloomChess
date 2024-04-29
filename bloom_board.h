@@ -35,17 +35,20 @@ struct TranspositionEntry {
     LegalMove best_move;
     int valuation;
     unsigned long long key = 0;
+    int alpha;
+    int beta;
 };
 
 
 struct TranspositionTable {
     LegalMove empty_legal_move = {0, 0};
-    TranspositionEntry empty_entry = {0, empty_legal_move, 0, 0};
+    TranspositionEntry empty_entry = {0, empty_legal_move, 0, 0, -10000000, 10000000};
     vector<TranspositionEntry> table;
     int table_size;
     int replacements = 0;
+    int entries = 0;
 
-    void store(unsigned long long key, int depth, LegalMove move, int valuation);
+    void store(unsigned long long key, int depth, LegalMove move, int valuation, int alpha, int beta);
     TranspositionEntry retrieve(unsigned long long key);
     void clear();
     void resize(int size);

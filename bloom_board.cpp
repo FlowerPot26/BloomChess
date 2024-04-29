@@ -11,12 +11,13 @@ using namespace std;
 
 
 
-void TranspositionTable::store(unsigned long long key, int depth, LegalMove move, int valuation) {
+void TranspositionTable::store(unsigned long long key, int depth, LegalMove move, int valuation, int alpha, int beta) {
+    entries += 1;
     int index = key % table_size;
     if (table[index].key != 0) {
         replacements += 1;
     }
-    table[index] = {depth, move, valuation, key};
+    table[index] = {depth, move, valuation, key, alpha, beta};
     //cout << "Stored data \n";
 }
 
@@ -39,6 +40,7 @@ TranspositionEntry TranspositionTable::retrieve(unsigned long long key) {
 void TranspositionTable::clear() {
     table.clear();
     replacements = 0;
+    entries = 0;
 }
 
 void TranspositionTable::resize(int size) {
@@ -58,6 +60,7 @@ void TranspositionTable::check() {
         }
     }
     cout << counter << " of " << table_size << " transposition table slots filled: " << double(counter) / table_size * 100 << " % \n";
+    cout << replacements << " entries were replaced and " << entries << " entries stored since the last reset \n";
 }
 
 
@@ -1264,9 +1267,11 @@ vector<LegalMove> Board::generateLegalMoves(int player, bool only_takes, LegalMo
         }
     }
 
-    if (!(table_move.from_i == 0 && table_move.to_i == 0)) {
-        table_move.priority = 1000;
-        legal_moves.push_back(table_move);
+    for (int i = 0; i < legal_moves.size(); i++) {
+        if (legal_moves[i].to_i == table_move.to_i && legal_moves[i].from_i == table_move.from_i) {
+            legal_moves[i].priority = 1000;
+            break;
+        }
     }
 
     
