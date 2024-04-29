@@ -1,7 +1,7 @@
 
 # BloomChess
 
-BloomChess is a chess engine written in c++
+BloomChess is a chess engine written in C++
 
 ## Features
 
